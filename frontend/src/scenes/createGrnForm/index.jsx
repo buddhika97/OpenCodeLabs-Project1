@@ -37,7 +37,7 @@ const CreateGrnForm = () => {
 
   return (
     <Box m='20px'>
-      <AdminHeader title='CREATE Product' subtitle='Create a New Product' />
+      <AdminHeader title='CREATE GRN' subtitle='Create a GRN' />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -107,13 +107,13 @@ const CreateGrnForm = () => {
                 fullWidth
                 variant='filled'
                 type='text'
-                label='Product / Material ID'
+                label='Product / Material Name'
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.id}
-                name='id'
-                error={!!touched.id && !!errors.id}
-                helperText={touched.id && errors.id}
+                value={values.name}
+                name='name'
+                error={!!touched.name && !!errors.name}
+                helperText={touched.name && errors.name}
                 sx={{ gridColumn: 'span 4' }}
               />
             </Box>
@@ -129,8 +129,9 @@ const CreateGrnForm = () => {
   )
 }
 
+
 const checkoutSchema = yup.object().shape({
-  id: yup.string().required('required'),
+  name: yup.string().required('required'),
   salesPrice: yup.number().required('required'),
   costPrice: yup.number().required('required'),
   qty: yup.number().required('required'),
@@ -139,7 +140,7 @@ const initialValues = {
   qty: '',
   salesPrice: '',
   costPrice:'',
-  id: '',
+  name: '',
 }
 
 export default CreateGrnForm

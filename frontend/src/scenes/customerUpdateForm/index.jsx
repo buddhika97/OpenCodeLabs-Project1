@@ -52,9 +52,7 @@ const UserUpdateForm = () => {
   } = userUpdate
 
   if (updateSuccess) {
-    toast.success('User Updated')
    
-    navigate('/admin/team')
   }
 
   const isNonMobile = useMediaQuery('(min-width:600px)')
@@ -70,6 +68,8 @@ const UserUpdateForm = () => {
     e.preventDefault()
 
     dispatch(updateCustomer(form, id))
+    toast.success('Customer Updated')
+    navigate('/admin/customers')
   }
 
   const change = (e) => {
@@ -97,7 +97,7 @@ const UserUpdateForm = () => {
   if (cusSuccess)
     return (
       <Box m='20px'>
-        <AdminHeader title='UPDATE CUSTOMER' subtitle='Create a New User Profile' />
+        <AdminHeader title='UPDATE CUSTOMER' subtitle='Update Customer Profile' />
 
         <form onSubmit={handleSubmit}>
           <Box

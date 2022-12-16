@@ -59,6 +59,7 @@ const registerUser = asyncHandler(async (req, res) => {
   })
 })
 
+
 // @desc  list all users
 // @route GET /api/users/
 // @access private

@@ -53,7 +53,7 @@ export default function BluePrintModle({ qrHandler, handleClose, open, data }) {
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>{'QR CODE'}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>Add to Blueprint</DialogTitle>
         <DialogContent>
           <Formik
             onSubmit={handleFormSubmit}

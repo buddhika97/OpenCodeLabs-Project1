@@ -37,7 +37,7 @@ const CreateCustomerForm = () => {
 
   return (
     <Box m='20px'>
-      <AdminHeader title='CREATE USER' subtitle='Create a New User Profile' />
+      <AdminHeader title='CREATE CUSTOMER' subtitle='Create a New Customer Profile' />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -129,7 +129,7 @@ const CreateCustomerForm = () => {
             </Box>
             <Box display='flex' justifyContent='end' mt='20px'>
               <Button type='submit' color='secondary' variant='contained'>
-                Create New User
+                Create New Customer
               </Button>
             </Box>
           </form>

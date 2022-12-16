@@ -20,7 +20,7 @@ import AdminHeader from '../components/AdminHeader'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getProductById } from '../actions/productActions'
+import { getProductDetails } from '../actions/productActions'
 import {
   useLocation,
   useNavigate,
@@ -62,7 +62,8 @@ const ProductScreen = () => {
     isError,
     error,
     data: product,
-  } = useQuery(['product', userInfo.token, id], getProductById)
+  } = useQuery(['product', userInfo.token, id], getProductDetails)
+  console.log(product)
 
   //   const queryParams = new URLSearchParams(location.search);
 
@@ -75,10 +76,10 @@ const ProductScreen = () => {
   } else if (isError) {
     return <p>{error.message}</p>
   } else {
-    content = product.data
+    content = product
   }
 
-  name = content.name
+  
 
   return (
     <Box m='20px'>
@@ -100,47 +101,29 @@ const ProductScreen = () => {
           
           <Accordion defaultExpanded sx={{ gridColumn: 'span 4' }}>
             <AccordionSummary expandIcon={<GridExpandMoreIcon />}>
-              <Typography> Name</Typography>
+              <Typography variant="h4"> Name</Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ background: '#f0f0f0' }}>
-              <Typography>{content.name}</Typography>
+              <Typography  variant="h4">{content.name}</Typography>
             </AccordionDetails>
           </Accordion>
 
      
           <Accordion defaultExpanded sx={{ gridColumn: 'span 4' }}>
             <AccordionSummary expandIcon={<GridExpandMoreIcon />}>
-              <Typography> Category</Typography>
+              <Typography variant="h4"> Price</Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ background: '#f0f0f0' }}>
-              <Typography>{content.category}</Typography>
+              <Typography variant="h4">{content.price}</Typography>
             </AccordionDetails>
           </Accordion>
 
           <Accordion defaultExpanded sx={{ gridColumn: 'span 4' }}>
             <AccordionSummary expandIcon={<GridExpandMoreIcon />}>
-              <Typography> Brand</Typography>
+              <Typography variant="h4"> Available Quantity</Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ background: '#f0f0f0' }}>
-              <Typography>{content.brand}</Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion defaultExpanded sx={{ gridColumn: 'span 4' }}>
-            <AccordionSummary expandIcon={<GridExpandMoreIcon />}>
-              <Typography> Re-order Level</Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ background: '#f0f0f0' }}>
-              <Typography>{content.re_order_level}</Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion defaultExpanded sx={{ gridColumn: 'span 4' }}>
-            <AccordionSummary expandIcon={<GridExpandMoreIcon />}>
-              <Typography>Product Description</Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ background: '#f0f0f0' }}>
-              <Typography>{content.description}</Typography>
+              <Typography variant="h4">{content.qty}</Typography>
             </AccordionDetails>
           </Accordion>
 

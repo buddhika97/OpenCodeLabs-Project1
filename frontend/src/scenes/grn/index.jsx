@@ -61,11 +61,18 @@ const Grn = () => {
   const columns = [
     { field: 'id', headerName: 'Batch ID', flex: 1 },
     {
+      field: 'name',
+      headerName: 'product/Material Name',
+      cellClassName: 'name-column--cell',
+      flex: 1,
+    },
+    {
       field: 'qty',
       headerName: 'Quantity',
       flex: 1,
-      cellClassName: 'name-column--cell',
+     
     },
+    
     {
       field: 'costPrice',
       headerName: 'Cost',
@@ -95,6 +102,7 @@ const Grn = () => {
   console.log(content)
   let rows = content?.map((content) => ({
     id: content.id,
+    name: content.name,
     costPrice: content.costPrice,
     salesPrice: content.salesPrice,
     qty: content.qty,

@@ -39,7 +39,7 @@ const CreateMaterialForm = () => {
 
   return (
     <Box m='20px'>
-      <AdminHeader title='CREATE Product' subtitle='Create a New Product' />
+      <AdminHeader title='CREATE MATERIAL' subtitle='Create a New Material' />
 
       <Formik
         onSubmit={handleFormSubmit}

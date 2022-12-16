@@ -98,8 +98,8 @@ import {
     return (
       <Box m='20px'>
         <AdminHeader
-          title='UPDATE CUSTOMER'
-          subtitle='Create a New User Profile'
+          title='UPDATE MATERIAL'
+          subtitle='Update a existing Material'
         />
   
         <form onSubmit={handleSubmit}>

@@ -13,11 +13,23 @@ Product.hasMany(ProBatch)
 // @route POST / api/customer
 
 const createBatch = asyncHandler(async (req, res) => {
-  console.log(req.body)
 
-  let product = await Product.findByPk(req.body.id)
-  let material = await Material.findByPk(req.body.id)
- 
+  let name = req.body.name.toLowerCase().split(' ')
+
+  name = name.filter((item) => item).join(' ')
+
+  let product = await Product.findOne({
+    where: {
+      name: name,
+    },
+  })
+  let material = await Material.findOne({
+    where: {
+      name: name,
+    },
+  })
+
+  
   if (product) {
     let batchId = uuidv4()
     let batch = {
@@ -25,7 +37,8 @@ const createBatch = asyncHandler(async (req, res) => {
       qty: req.body.qty,
       salesPrice: req.body.salesPrice,
       costPrice: req.body.costPrice,
-      productId: req.body.id,
+      productId: product.id,
+      name: product.name,
     }
 
     const result = await ProBatch.create(batch)
@@ -39,7 +52,8 @@ const createBatch = asyncHandler(async (req, res) => {
       qty: req.body.qty,
       salesPrice: req.body.salesPrice,
       costPrice: req.body.costPrice,
-      materialId: req.body.id,
+      materialId: material.id,
+      name: material.name,
     }
 
     const result = await ProBatch.create(batch)

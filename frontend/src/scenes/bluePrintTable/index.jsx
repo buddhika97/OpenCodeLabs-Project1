@@ -55,7 +55,7 @@ const Material = () => {
     content = materials
   }
 
-  console.log(materials[2].items)
+
   const updateMaterial = () => {
    
   }

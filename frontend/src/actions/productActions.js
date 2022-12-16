@@ -49,6 +49,11 @@ export const getProductById = async (details) => {
   return await axios.get(`/api/product/${details.queryKey[2]}`, config)
 }
 
+export const getProductDetails = async (details) => {
+  const { data } = await axios.get(`/api/product/public/${details.queryKey[2]}`)
+  return data
+}
+
 export const updateProduct = async (product) => {
   const config = {
     headers: {

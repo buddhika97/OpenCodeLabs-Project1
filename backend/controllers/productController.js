@@ -44,21 +44,6 @@ const getAllProduct = asyncHandler(async (req, res) => {
   inStock = products.filter((item) => item.productId !== null)
 
 
-
-  // out of stock materials 
-  // let outOfStockm = await Material.findAll({ include: ProBatch })
-  // outOfStockm = outOfStockm.filter((item) => item.ProBatches.length < 1)
-  // outOfStockm.forEach((item) => (item.qty = 0))
-  // let amountm =
-  //   await db.query(`SELECT materials.id, materials.name, materials.description,materials.category, materials.brand, materials.re_order_level, 
-  // SUM(probatches.qty) as sum FROM materials,probatches 
-  // WHERE materials.id = probatches.materialId 
-  // GROUP BY probatches.materialId`)
-  // let filterArrm = amountm[0]
-  // filterArrm = filterArrm.filter((item) => item.sum < 1)
-  // outOfStockm = [...outOfStockm, ...filterArrm]
-
-
   console.log(req.query)
   if (req.query.stock === 'in') {
     res.status(200).json(inStock)
@@ -66,6 +51,37 @@ const getAllProduct = asyncHandler(async (req, res) => {
     res.status(200).json(outOfStock)
   }
 })
+
+
+// @desc  product details
+// @route GET /api/product/public/:id
+// @access public
+const prodcutDetails = asyncHandler(async (req, res) => {
+
+
+  let probatch = await ProBatch.findOne({
+    where: {
+      productId: req.params.id,
+    },
+  })
+
+  let result = {
+    id: probatch.productId,
+    name: probatch.name,
+    qty: probatch.qty,
+    price: probatch.salesPrice
+  }
+
+ 
+  if (probatch) {
+    res.status(200).json(result)
+  } else {
+    res.status(404)
+    throw new Error('product not found')
+  }
+})
+
+
 
 // @desc  product details
 // @route GET /api/product/:id
@@ -125,5 +141,6 @@ export {
   createProduct,
   getSingleProduct,
   removeProduct,
+  prodcutDetails,
   updateProduct,
 }

@@ -97,8 +97,8 @@ const UserUpdateForm = () => {
   return (
     <Box m='20px'>
       <AdminHeader
-        title='UPDATE CUSTOMER'
-        subtitle='Create a New User Profile'
+        title='UPDATE PRODUCT'
+        subtitle='Update a existing product'
       />
 
       <form onSubmit={handleSubmit}>

@@ -7,6 +7,11 @@ const ProBatch = db.define('ProBatches', {
     type: DataTypes.UUID,
     primaryKey: true,
   },
+
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   qty: {
     type: DataTypes.FLOAT,
     allowNull: false,
@@ -19,7 +24,6 @@ const ProBatch = db.define('ProBatches', {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-
 })
 
 db.sync()

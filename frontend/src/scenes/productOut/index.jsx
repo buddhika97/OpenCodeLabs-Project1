@@ -170,7 +170,7 @@ const Customer = () => {
           <span className='px-2'>Add Product</span>
         </Button>
 
-        {selectedRows.length === 1 && (
+        {/* {selectedRows.length === 1 && (
           <Button
             className='p-0 pe-2'
             variant='text'
@@ -179,7 +179,7 @@ const Customer = () => {
             <CropFree fontSize='small' />
             <span className='px-2'>Generate QR</span>
           </Button>
-        )}
+        )} */}
 
         {selectedRows.length === 1 && (
           <Button
@@ -208,7 +208,7 @@ const Customer = () => {
 
   return (
     <Box m='20px'>
-      <AdminHeader title='PRODUCTS' subtitle='Managing Out Stock Products' />
+      <AdminHeader title='PRODUCTS' subtitle='Managing Out of Stock Products' />
      
       <Box
         m='40px 0 0 0'

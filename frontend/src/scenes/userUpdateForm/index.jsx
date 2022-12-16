@@ -87,7 +87,7 @@ const UserUpdateForm = () => {
 
   return (
     <Box m='20px'>
-      <AdminHeader title='CREATE USER' subtitle='Create a New User Profile' />
+      <AdminHeader title='UPDATE USER' subtitle='Update User Profile' />
 
       <form onSubmit={handleSubmit}>
         <Box
