@@ -18,7 +18,7 @@ const Header = ({ heading, paragraph, linkName, linkUrl = '#' }) => {
         {paragraph}{' '}
         <Link
           to={linkUrl}
-          className='font-medium text-purple-600 hover:text-purple-500'
+          className='font-me dium text-purple-600 hover:text-purple-500'
         >
           {linkName}
         </Link>
