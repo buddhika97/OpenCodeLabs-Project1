@@ -1,7 +1,7 @@
 # Install
 
-`npm install`    
-
+- run  `npm install` command in root directory
+- cd into the frontend folder and again run `npm install`
 ---
 
 # Things to add
