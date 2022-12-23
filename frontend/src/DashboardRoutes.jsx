@@ -70,6 +70,7 @@ function DashboardRoutes() {
             <Route path='/creategrn' element={<CreateGrn/>} />
 
             <Route path ='/blueprint' element={<BluePrint/>} />
+            <Route path ='/blueprint/:keyword' element={<BluePrint/>} />
             <Route path = '/blueprintlist' element={<BluePrintList/>} />
 
 

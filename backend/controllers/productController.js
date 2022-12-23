@@ -22,7 +22,7 @@ const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(result)
 })
 
-// @desc  list all products
+// @desc  list all products based on the stock
 // @route GET /api/products
 // @access Private
 const getAllProduct = asyncHandler(async (req, res) => {
@@ -43,7 +43,6 @@ const getAllProduct = asyncHandler(async (req, res) => {
   let inStock = products.filter((item) => item.qty > 0)
   inStock = products.filter((item) => item.productId !== null)
 
-
   console.log(req.query)
   if (req.query.stock === 'in') {
     res.status(200).json(inStock)
@@ -52,13 +51,27 @@ const getAllProduct = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc  list all products
+// @route GET /api/products/names
+// @access Private
+const getProductNames = asyncHandler(async (req, res) => {
+
+
+
+  // let products = await db.query(`SELECT * FROM products WHERE name LIKE '%${req.query.key}%'`)
+
+  let products = await db.query(`SELECT name FROM products`)
+
+
+  
+  res.status(200).json(products[0])
+
+})
 
 // @desc  product details
 // @route GET /api/product/public/:id
 // @access public
 const prodcutDetails = asyncHandler(async (req, res) => {
-
-
   let probatch = await ProBatch.findOne({
     where: {
       productId: req.params.id,
@@ -69,10 +82,9 @@ const prodcutDetails = asyncHandler(async (req, res) => {
     id: probatch.productId,
     name: probatch.name,
     qty: probatch.qty,
-    price: probatch.salesPrice
+    price: probatch.salesPrice,
   }
 
- 
   if (probatch) {
     res.status(200).json(result)
   } else {
@@ -80,8 +92,6 @@ const prodcutDetails = asyncHandler(async (req, res) => {
     throw new Error('product not found')
   }
 })
-
-
 
 // @desc  product details
 // @route GET /api/product/:id
@@ -143,4 +153,5 @@ export {
   removeProduct,
   prodcutDetails,
   updateProduct,
+  getProductNames,
 }

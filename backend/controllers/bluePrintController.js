@@ -21,12 +21,13 @@ export const createBluePrint = asyncHandler(async (req, res) => {
     },
   })
 
-  if (product) {
+  if (product && product.id) {
     let bluePrintId = uuidv4()
     let blueprint = {
       id: bluePrintId,
       resources: JSON.stringify(req.body.resources),
       productId: product.id,
+      productName: product.name
     }
     const result = await BluePrint.create(blueprint)
     return res.status(201).json(result)
@@ -50,6 +51,7 @@ export const getAllBluePrints = asyncHandler(async (req, res) => {
 
     let BluPrintReturn = {
       id: batch[i].id,
+      productName:batch[i].productName,
       productId: batch[i].productId,
       resources: batch[i].resources,
       items: await findProductCountAndCost(batch[i].resources),
@@ -63,26 +65,30 @@ export const getAllBluePrints = asyncHandler(async (req, res) => {
 
 //product counter helper
 const findProductCountAndCost = async (materialList) => {
-  let productCountArr = []
+   // Initialize an empty array to store the product counts
+   let productCountArr = []
 
-  for (const property in materialList) {
-    let available = await db.query(
-      `SELECT SUM(qty) FROM probatches WHERE materialId = '${property}' AND qty > 0;`
-    )
-    available = available[0][0]['SUM(qty)']
-    if (available > materialList[property]) {
-      productCountArr.push(Math.floor(available / materialList[property]))
-    } else {
-      productCountArr.push(Math.floor(available / materialList[property]))
-    }
-
-    let total = await db.query(
-      `SELECT * FROM probatches WHERE materialId = '${property}' AND qty > 0 ORDER BY createdAt ASC`
-    )
-  }
-
-  return productCountArr.sort((a, b) => a - b)[0]
-}
+   // Loop through the material list and get the available quantity and cost for each material
+   for (const property in materialList) {
+     // Get the available quantity of the material from the probatches table
+     const available = await db.query(
+       `SELECT SUM(qty) FROM probatches WHERE materialId = '${property}' AND qty > 0;`
+     )
+     // Get the total cost of the material from the probatches table
+     const total = await db.query(
+       `SELECT * FROM probatches WHERE materialId = '${property}' AND qty > 0 ORDER BY createdAt ASC`
+     )
+ 
+     // Calculate the number of products that can be made with the available quantity of the material
+     const productCount = Math.floor(available[0][0]['SUM(qty)'] / materialList[property])
+ 
+     // Add the product count to the array
+     productCountArr.push(productCount)
+   }
+ 
+   // Sort the array of product counts in ascending order and return the first (smallest) value
+   return productCountArr.sort((a, b) => a - b)[0]
+ }
 
 // @desc  product details
 // @route GET /api/product/:id

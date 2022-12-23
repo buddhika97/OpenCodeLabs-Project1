@@ -43,7 +43,7 @@ const Material = () => {
     isLoading,
     isError,
     error,
-    data: materials,
+    data: blueprints,
   } = useQuery(['bluePrintList', userInfo.token], listBluePrints)
 
   let content
@@ -52,13 +52,12 @@ const Material = () => {
   } else if (isError) {
     return <p>{error.message}</p>
   } else {
-    content = materials
+    content = blueprints
   }
 
+  console.log(blueprints)
 
-  const updateMaterial = () => {
-   
-  }
+  const updateMaterial = () => {}
 
   const addToBluprint = () => {
     setOpen(true)
@@ -68,13 +67,14 @@ const Material = () => {
     setOpen(false)
   }
 
-
-
-
   const columns = [
     { field: 'id', headerName: 'ID', flex: 1.5 },
-   
 
+    {
+      field: 'name',
+      headerName: 'Product Name',
+      flex: 1,
+    },
     {
       field: 'items',
       headerName: 'Maximum products',
@@ -85,14 +85,13 @@ const Material = () => {
       headerName: 'productId',
       flex: 1,
     },
-
-   
   ]
 
   let rows = content?.map((content) => ({
     id: content.id,
+    name: content.productName,
     items: content.items,
-    productId: content.productId
+    productId: content.productId,
   }))
 
   const CustomToolbar = () => {

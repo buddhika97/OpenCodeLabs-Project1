@@ -10,6 +10,10 @@ const BluePrint = db.define('BluePrints', {
     type: DataTypes.STRING,
   },
 
+  productName: {
+    type: DataTypes.STRING,
+  },
+
   
   productId: {
     type: DataTypes.UUID,
@@ -20,7 +24,6 @@ const BluePrint = db.define('BluePrints', {
     },
   },
 })
-
 
 db.sync()
 

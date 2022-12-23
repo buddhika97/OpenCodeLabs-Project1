@@ -6,13 +6,15 @@ import {
     getSingleProduct,
     removeProduct,
     updateProduct,
-    prodcutDetails
+    prodcutDetails,
+    getProductNames
 } from '../controllers/productController.js'
 
 import { protect } from '../middleware/authMiddleware.js'
 
 router.route('/').get(protect, getAllProduct).post(protect, createProduct)
 
+router.get('/names', protect, getProductNames)
 
 router.route('/public/:id').get(prodcutDetails)
 

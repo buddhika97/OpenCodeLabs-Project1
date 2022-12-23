@@ -20,7 +20,36 @@ export const listProductsOuttock = async (token) => {
   }
 
   const { data } = await axios.get(`/api/product`, config)
+ 
 
+  return data
+}
+
+// export const listProductName = async (token) => {
+//   console.log(token.queryKey[2])
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token.queryKey[1]}`,
+//     },
+//   }
+
+//   if (token.queryKey[2]) {
+//     const { data } = await axios.get(
+//       `/api/product/names?key=${token.queryKey[2]}`,
+//       config
+//     )
+//     return data
+//   }
+// }
+
+export const listProductName = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token.queryKey[1]}`,
+    },
+  }
+
+  const { data } = await axios.get(`/api/product/names`, config)
   return data
 }
 
