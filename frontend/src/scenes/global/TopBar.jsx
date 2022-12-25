@@ -6,11 +6,9 @@ import InputBase from '@mui/material/InputBase'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import SearchIcon from '@mui/icons-material/Search'
-import Build from '@mui/icons-material/Build'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { getCartList } from '../../actions/cartAction'
 
@@ -18,12 +16,10 @@ const TopBar = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const colorMode = useContext(ColorModeContext)
-  const navigate = useNavigate()
 
   const {
     isLoading,
     isError,
-    error,
     data: cart,
   } = useQuery(['cart'], getCartList)
 

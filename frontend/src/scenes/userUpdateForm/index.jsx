@@ -1,23 +1,15 @@
 import {
   Box,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from '@mui/material'
-import { Formik } from 'formik'
-import * as yup from 'yup'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Header from '../../components/Header'
 import AdminHeader from '../../components/AdminHeader'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUserDetails, updateUser } from '../../actions/userActions'
 import { useNavigate, useParams } from 'react-router-dom'
-import { userDetailsReset } from '../../reducers/userSlice'
 import {  toast } from 'react-toastify'
 import { userUpdateReset } from '../../reducers/userUpdateSlice'
 

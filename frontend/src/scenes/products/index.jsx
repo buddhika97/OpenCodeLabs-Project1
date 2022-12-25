@@ -2,13 +2,11 @@ import { Box, Button, useTheme } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { tokens } from '../../theme'
 
-import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import DesignServices from '@mui/icons-material/DesignServices'
-import Add from '@mui/icons-material/Add'
 import CropFree from '@mui/icons-material/CropFree'
 
 import AdminHeader from '../../components/AdminHeader'
-import { useEffect, useRef, useState } from 'react'
+import {  useRef, useState } from 'react'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -19,10 +17,10 @@ import {
 
 import { useNavigate } from 'react-router-dom'
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { useQuery} from 'react-query'
 import {
   listProductsInStock,
-  createProduct,
+
 } from '../../actions/productActions'
 import { useSelector } from 'react-redux'
 

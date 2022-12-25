@@ -1,10 +1,10 @@
-import { Box, Button, Typography, useTheme } from '@mui/material'
+import { Box, Button, useTheme } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { tokens } from '../../theme'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import DesignServices from '@mui/icons-material/DesignServices'
-import CropFree from '@mui/icons-material/CropFree'
+
 import Add from '@mui/icons-material/Add'
 
 import AdminHeader from '../../components/AdminHeader'
@@ -25,7 +25,6 @@ import {
   RemoveMaterial,
 } from '../../actions/materialActions'
 import { useSelector } from 'react-redux'
-import Qrmodel from '../../components/Qrmodel'
 import QRCode from 'qrcode'
 import { toast } from 'react-toastify'
 
@@ -38,16 +37,6 @@ const MaterialOut = () => {
   const queryClient = useQueryClient()
 
   const navigate = useNavigate()
-
-  const qr = useRef('')
-
-  const generateQR = async (text) => {
-    try {
-      qr.current = await QRCode.toDataURL(text)
-    } catch (err) {
-      console.error(err)
-    }
-  }
 
   const users = useSelector((state) => state.userLogin)
   const { userInfo } = users

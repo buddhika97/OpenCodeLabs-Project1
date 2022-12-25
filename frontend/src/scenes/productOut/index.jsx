@@ -1,14 +1,14 @@
-import { Box, Button, Typography, useTheme } from '@mui/material'
+import { Box, Button, useTheme } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { tokens } from '../../theme'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import DesignServices from '@mui/icons-material/DesignServices'
-import CropFree from '@mui/icons-material/CropFree'
+
 import Add from '@mui/icons-material/Add'
 
 import AdminHeader from '../../components/AdminHeader'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -22,8 +22,6 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import {
   listProductsOuttock,
-  listProductsInStock,
-  createProduct,
   RemoveProduct,
 } from '../../actions/productActions'
 import { useSelector } from 'react-redux'

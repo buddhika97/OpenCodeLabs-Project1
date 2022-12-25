@@ -19,10 +19,5 @@ router.get('/latest', protect, latestSales)
 
 router.get('/total', protect, totalSales)
 
-// router
-//   .route('/:id')
-//   .get(protect, getSingleMaterial)
-//   .delete(protect, removeMaterial)
-//   .put(protect, updateMaterial)
 
 export default router

@@ -1,35 +1,31 @@
 import {
   Box,
   Button,
-  FormControl,
+
   InputLabel,
-  MenuItem,
-  Select,
+
   TextField,
 } from '@mui/material'
-import { Formik } from 'formik'
-import * as yup from 'yup'
+
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Header from '../../components/Header'
+
 import AdminHeader from '../../components/AdminHeader'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import {  useSelector } from 'react-redux'
+
 import { getProductById } from '../../actions/productActions'
 import {
   useLocation,
   useNavigate,
   useParams,
-  useSearchParams,
 } from 'react-router-dom'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { updateProduct, createProduct } from '../../actions/productActions'
+import { useQuery, useMutation } from 'react-query'
+import { updateProduct } from '../../actions/productActions'
 import { toast } from 'react-toastify'
 
 const UserUpdateForm = () => {
-  const queryClient = useQueryClient()
   const location = useLocation()
-  const dispatch = useDispatch()
+
   const { id } = useParams()
   const isNonMobile = useMediaQuery('(min-width:600px)')
   const navigate = useNavigate()
@@ -51,25 +47,18 @@ const UserUpdateForm = () => {
     data: product,
   } = useQuery(['product', userInfo.token, id], getProductById)
 
-  const addProductMutation = useMutation( updateProduct, {
+  const addProductMutation = useMutation(updateProduct, {
     onSuccess: () => {
-     
       toast.success('Product Added!')
 
       if (location.search.split('=')[1] === 'out') {
         navigate('/admin/outproduct')
-      }else{
+      } else {
         navigate('/admin/product')
       }
-
-
     },
   })
 
-  //   const queryParams = new URLSearchParams(location.search);
-
-  //   // Now you can use the queryParams object to access individual query parameters
-  //   const param1 = queryParams.get('param1');
 
   let content
   if (isLoading) {

@@ -2,24 +2,18 @@ import { Box, Button, TextField } from '@mui/material'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Header from '../../components/Header'
 import AdminHeader from '../../components/AdminHeader'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { createCustomer } from '../../actions/customerActions'
 import { useNavigate } from 'react-router-dom'
-import { createCustomerReset } from '../../reducers/customerSlice'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
+
+import { useMutation } from 'react-query'
 import {
-  listProductsOuttock,
-  listProductsInStock,
   createProduct,
 } from '../../actions/productActions'
 
 const CreateCustomerForm = () => {
   const isNonMobile = useMediaQuery('(min-width:600px)')
-  const queryClient = useQueryClient()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const users = useSelector((state) => state.userLogin)

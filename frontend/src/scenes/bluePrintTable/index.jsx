@@ -4,12 +4,9 @@ import { tokens } from '../../theme'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import DesignServices from '@mui/icons-material/DesignServices'
-import Build from '@mui/icons-material/Build'
-import Add from '@mui/icons-material/Add'
-import CropFree from '@mui/icons-material/CropFree'
 
 import AdminHeader from '../../components/AdminHeader'
-import { useEffect, useRef, useState } from 'react'
+import {  useState } from 'react'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -24,9 +21,6 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { RemoveBlueprint, listBluePrints } from '../../actions/bluePrintActions'
 import { useSelector } from 'react-redux'
 
-import Qrmodel from '../../components/Qrmodel'
-import QRCode from 'qrcode'
-import BluePrintModle from '../../components/BluePrintModle'
 import { toast } from 'react-toastify'
 
 const Material = () => {
@@ -34,7 +28,6 @@ const Material = () => {
   const colors = tokens(theme.palette.mode)
   const queryClient = useQueryClient()
   const [selectedRows, setSelectedRows] = useState([])
-  const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
   const users = useSelector((state) => state.userLogin)

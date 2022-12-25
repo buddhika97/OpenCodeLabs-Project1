@@ -1,9 +1,7 @@
 import {
-  Autocomplete,
   Box,
   Button,
   Grid,
-  TextField,
   useTheme,
 } from '@mui/material'
 
@@ -22,10 +20,9 @@ import { toast } from 'react-toastify'
 import { getCartList } from '../../actions/cartAction'
 
 const Cart = () => {
-  const theme = useTheme()
+
   const queryClient = useQueryClient()
-  const colors = tokens(theme.palette.mode)
-  const [selectedRows, setSelectedRows] = useState([])
+
   const [build, setBuild] = useState(0)
 
   const navigate = useNavigate()

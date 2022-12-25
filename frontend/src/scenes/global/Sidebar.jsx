@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
+import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import 'react-pro-sidebar/dist/css/styles.css'
@@ -7,20 +7,13 @@ import { tokens } from '../../theme'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
 import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined'
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined'
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
-import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined'
-import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 
-import Inventory from '@mui/icons-material/Inventory'
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
+
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
+
 import MonetizationOn from '@mui/icons-material/MonetizationOn'
 import PointOfSale from '@mui/icons-material/PointOfSale'
-import RawOn from '@mui/icons-material/RawOn'
 
 import Warehouse from '@mui/icons-material/Warehouse'
 import Factory from '@mui/icons-material/Factory'
@@ -32,9 +25,6 @@ import BuildCircle from '@mui/icons-material/BuildCircle'
 
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
-
-
-
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()

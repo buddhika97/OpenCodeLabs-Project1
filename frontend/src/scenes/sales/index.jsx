@@ -2,13 +2,8 @@ import { Box, Button, useTheme } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { tokens } from '../../theme'
 
-import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import DesignServices from '@mui/icons-material/DesignServices'
-import Add from '@mui/icons-material/Add'
-import CropFree from '@mui/icons-material/CropFree'
-
 import AdminHeader from '../../components/AdminHeader'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -20,11 +15,9 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'react-query'
-import { listGrn } from '../../actions/grnActions'
+
 import { useSelector } from 'react-redux'
 import { listSales } from '../../actions/salesActions'
-
-
 
 const Sales = () => {
   const theme = useTheme()
@@ -67,16 +60,14 @@ const Sales = () => {
       field: 'discount',
       headerName: 'Discount',
       flex: 1,
-     
     },
-    
+
     {
       field: 'SubTotal',
       headerName: 'Sub Total',
       cellClassName: 'name-column--cell',
       flex: 1,
     },
-
 
     {
       field: 'date',
@@ -101,7 +92,6 @@ const Sales = () => {
         <GridToolbarFilterButton />
         <GridToolbarDensitySelector />
         <GridToolbarExport printOptions={{ disableToolbarButton: false }} />
-
       </GridToolbarContainer>
     )
   }

@@ -2,14 +2,13 @@ import { Box, Button, TextField } from '@mui/material'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import Header from '../../components/Header'
+
 import AdminHeader from '../../components/AdminHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { createCustomer } from '../../actions/customerActions'
 import { useNavigate } from 'react-router-dom'
 import { createCustomerReset } from '../../reducers/customerSlice'
-import { useEffect } from 'react'
 
 const CreateCustomerForm = () => {
   const isNonMobile = useMediaQuery('(min-width:600px)')
@@ -19,7 +18,7 @@ const CreateCustomerForm = () => {
 
   let newCustomer = useSelector((state) => state.customer)
 
-  let { cusError, cusLoading, cusSuccess, customerInfo } = newCustomer
+  let { cusError,  cusSuccess,  } = newCustomer
 
   if (cusSuccess) {
     toast.success('New Customer added!')

@@ -1,35 +1,31 @@
 import {
     Box,
     Button,
-    FormControl,
     InputLabel,
-    MenuItem,
-    Select,
+
     TextField,
   } from '@mui/material'
-  import { Formik } from 'formik'
-  import * as yup from 'yup'
+
   import useMediaQuery from '@mui/material/useMediaQuery'
-  import Header from '../../components/Header'
+
   import AdminHeader from '../../components/AdminHeader'
   import { useState } from 'react'
   import { useDispatch, useSelector } from 'react-redux'
-  import { useEffect } from 'react'
+
   import { getMaterialById, updateMaterial} from '../../actions/materialActions'
   import {
     useLocation,
     useNavigate,
     useParams,
-    useSearchParams,
+
   } from 'react-router-dom'
-  import { useQuery, useMutation, useQueryClient } from 'react-query'
+  import { useQuery, useMutation} from 'react-query'
  
   import { toast } from 'react-toastify'
   
   const MaterialUpdateForm = () => {
   
     const location = useLocation()
-    const dispatch = useDispatch()
     const { id } = useParams()
     const isNonMobile = useMediaQuery('(min-width:600px)')
     const navigate = useNavigate()
