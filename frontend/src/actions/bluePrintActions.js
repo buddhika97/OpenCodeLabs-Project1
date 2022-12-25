@@ -29,6 +29,21 @@ export const createBlueprint = async (product) => {
 }
 
 
+export const getBluePrintById = async (details) => {
+  console.log(details)
+  const config = {
+    headers: {
+      Authorization: `Bearer ${details.queryKey[1]}`,
+    },
+  }
+
+  const {data} = await axios.get(`/api/blueprint/${details.queryKey[2]}`, config)
+  return data
+}
+
+
+
+
 // export const sendForBucket = (product) => {
 //     // Get the existing products from local storage, or initialize an empty object
 //     const products = JSON.parse(localStorage.getItem('bluePrintBucket')) || {}
@@ -57,16 +72,7 @@ export const createBlueprint = async (product) => {
 
 
 
-// export const getMaterialById = async (details) => {
-//   console.log(details)
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${details.queryKey[1]}`,
-//     },
-//   }
 
-//   return await axios.get(`/api/material/${details.queryKey[2]}`, config)
-// }
 
 // export const updateMaterial = async (product) => {
 //   const config = {
@@ -83,14 +89,14 @@ export const createBlueprint = async (product) => {
 //   return await axios.put(`/api/material/${id}`, product, config)
 // }
 
-// export const RemoveMaterial = async (product) => {
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${product.token}`,
-//     },
-//   }
-//   const id = product.id
+export const RemoveBlueprint = async (blueprint) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${blueprint.token}`,
+    },
+  }
+  const id = blueprint.id
 
-//   return await axios.delete(`/api/material/${id}`, config)
-// }
+  return await axios.delete(`/api/blueprint/${id}`, config)
+}
 

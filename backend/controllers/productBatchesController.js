@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import ProBatch from '../models/productBatchModel.js'
 import Product from '../models/productsModel.js'
 import Material from '../models/RMmodel.js'
+import db from '../config/db.js'
 
 ProBatch.belongsTo(Product)
 ProBatch.belongsTo(Material)
@@ -10,7 +11,7 @@ Material.hasMany(ProBatch)
 Product.hasMany(ProBatch)
 
 // @desc create a Product
-// @route POST / api/customer
+// @route POST / api/probatch
 
 const createBatch = asyncHandler(async (req, res) => {
 
@@ -63,8 +64,8 @@ const createBatch = asyncHandler(async (req, res) => {
   res.status(400).json('Invalid Product or Material ID')
 })
 
-// @desc  list all products
-// @route GET /api/products
+// @desc  list all probatch
+// @route GET /api/probatch
 // @access Private
 const getAllBatches = asyncHandler(async (req, res) => {
   const batch = await ProBatch.findAll({
@@ -74,6 +75,33 @@ const getAllBatches = asyncHandler(async (req, res) => {
   res.status(200).json(batch)
 })
 
+
+
+//@desc update product mint
+//@route UPDATE /api/probatch
+//@access Private
+
+const updateMaterialsBatches = asyncHandler(async (req, res) => {
+  
+ 
+  for(let i=0; i < req.body.batches.length; i++) {
+   let batch = await ProBatch.findByPk( req.body.batches[i].id)
+   console.log(req.body.batches[i])
+    if(batch) {
+      batch.set({ qty: batch.qty - (req.body.batches[i].qty),})
+      await batch.save()
+    }else{
+      res.status(404)
+      throw new Error('Batch Not Found')
+    }
+  }
+  res.status(200).json('Success')
+})
+
+
+
+
+// ///////////////////////////////////////////////
 // @desc  product details
 // @route GET /api/product/:id
 // @access Private
@@ -105,7 +133,7 @@ const removeBatch = asyncHandler(async (req, res) => {
 })
 
 //@desc update prouduct
-// @route DELETE /api/product/:id
+// @route UPDATE /api/product/:id
 // @access Private
 const updateBatch = asyncHandler(async (req, res) => {
   const propertyNames = Object.entries(req.body)
@@ -126,4 +154,15 @@ const updateBatch = asyncHandler(async (req, res) => {
   }
 })
 
-export { getAllBatches, createBatch, getSingleBatch, removeBatch, updateBatch }
+// @desc  total cost
+// @route GET /api/probatch/total
+// @access Private
+const totalCost = asyncHandler(async (req, res) => {
+  const sales = await db.query(`SELECT SUM(costPrice) as totalCost
+  FROM probatches`)
+  console.log('dfd')
+  res.status(200).json(sales[0][0])
+})
+
+
+export { getAllBatches, createBatch, getSingleBatch, removeBatch, updateBatch,updateMaterialsBatches,totalCost }

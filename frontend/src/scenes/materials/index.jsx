@@ -24,16 +24,11 @@ import { useQuery } from 'react-query'
 import { listMaterialsInStock } from '../../actions/materialActions'
 import { useSelector } from 'react-redux'
 
-import Qrmodel from '../../components/Qrmodel'
-import QRCode from 'qrcode'
-import BluePrintModle from '../../components/BluePrintModle'
-import { toast } from 'react-toastify'
-
 const Material = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [selectedRows, setSelectedRows] = useState([])
-  const [open, setOpen] = useState(false)
+
   const navigate = useNavigate()
 
   const users = useSelector((state) => state.userLogin)
@@ -59,13 +54,6 @@ const Material = () => {
     navigate('/admin/updateMaterial/' + selectedRows[0].material.id)
   }
 
-  const addToBluprint = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const columns = [
     { field: 'matId', headerName: 'Material ID', flex: 1 },
@@ -148,16 +136,7 @@ const Material = () => {
           </Button>
         )}
 
-        {selectedRows.length === 1 && (
-          <Button
-            className='p-0 pe-2'
-            variant='text'
-            onClick={() => addToBluprint()}
-          >
-            <Build fontSize='small' />
-            <span className='px-2'>Add to Blueprint Bucket</span>
-          </Button>
-        )}
+  
       </GridToolbarContainer>
     )
   }
@@ -215,15 +194,6 @@ const Material = () => {
         />
       </Box>
 
-      {selectedRows[0] && (
-        <BluePrintModle
-          onClick={addToBluprint}
-          open={open}
-          handleClose={handleClose}
-          data={selectedRows[0]}
-          // addToBucket = {() => addToBucket(data)}
-        />
-      )}
     </Box>
   )
 }

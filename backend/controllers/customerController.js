@@ -77,10 +77,23 @@ const updateCustomer = asyncHandler(async (req, res) => {
   }
 })
 
+
+// @desc  list customer count
+// @route GET /api/customer/count
+// @access Private
+const totalCustomers = asyncHandler(async (req, res) => {
+  const customers = await Customer.count({})
+  console.log('users')
+  res.status(200).json(customers)
+})
+
+
+
 export {
   getAllUsers,
   createCustomer,
   getSingleCustomer,
   removeCustomer,
   updateCustomer,
+  totalCustomers
 }

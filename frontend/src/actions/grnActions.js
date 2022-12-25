@@ -12,8 +12,6 @@ export const listGrn = async (token) => {
   return data
 }
 
-
-
 export const createGrn = async (product) => {
   console.log(product)
 
@@ -28,3 +26,18 @@ export const createGrn = async (product) => {
   return await axios.post(`/api/probatch`, product, config)
 }
 
+
+
+export const updateProBatches = async (batch) => {
+  console.log(batch)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${batch.token}`,
+    },
+  }
+
+  delete batch.token
+
+  return await axios.put(`/api/probatch`, batch, config)
+}

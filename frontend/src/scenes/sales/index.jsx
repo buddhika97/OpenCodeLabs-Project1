@@ -4,7 +4,6 @@ import { tokens } from '../../theme'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import DesignServices from '@mui/icons-material/DesignServices'
-import Build from '@mui/icons-material/Build'
 import Add from '@mui/icons-material/Add'
 import CropFree from '@mui/icons-material/CropFree'
 
@@ -20,23 +19,18 @@ import {
 
 import { useNavigate } from 'react-router-dom'
 
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { RemoveBlueprint, listBluePrints } from '../../actions/bluePrintActions'
+import { useQuery } from 'react-query'
+import { listGrn } from '../../actions/grnActions'
 import { useSelector } from 'react-redux'
+import { listSales } from '../../actions/salesActions'
 
-import Qrmodel from '../../components/Qrmodel'
-import QRCode from 'qrcode'
-import BluePrintModle from '../../components/BluePrintModle'
-import { toast } from 'react-toastify'
 
-const Material = () => {
+
+const Sales = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const queryClient = useQueryClient()
   const [selectedRows, setSelectedRows] = useState([])
-  const [open, setOpen] = useState(false)
   const navigate = useNavigate()
-
   const users = useSelector((state) => state.userLogin)
   const { userInfo } = users
 
@@ -44,22 +38,8 @@ const Material = () => {
     isLoading,
     isError,
     error,
-    data: blueprints,
-  } = useQuery(['bluePrintList', userInfo.token], listBluePrints)
-
-
-
-  const deleteMutation = useMutation(RemoveBlueprint, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('bluePrintList')
-      toast.success('BluePrint Removed!')
-    },
-    onError: (error) => {
-      toast.error(error.response.data.message)
-      console.log(error)
-    },
-  })
-
+    data: sales,
+  } = useQuery(['sales', userInfo.token], listSales)
 
   let content
   if (isLoading) {
@@ -67,56 +47,51 @@ const Material = () => {
   } else if (isError) {
     return <p>{error.message}</p>
   } else {
-    content = blueprints
+    content = sales
   }
 
+  console.log(selectedRows)
 
-  const badgeCreate = (id) => {
-    let feedback = prompt(
-      'Enter Batch quantiy(should be lower than Maximum Products)?',
-      ''
-    )
-    if (
-      feedback &&
-      !isNaN(feedback) &&
-      feedback <= selectedRows[0].items &&
-      feedback > 0
-    ) {
-      navigate(`/admin/mintbadge/${id}/${feedback}`)
-    }
-  }
-
-  const removeBlueprint = (id) => {
-    if (window.confirm('Are you sure?')) {
-      deleteMutation.mutate({ id: id, token: userInfo.token })
-    }
+  const createGrn = () => {
+    navigate('/admin/creategrn')
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', flex: 1.5 },
+    { field: 'id', headerName: 'Sale ID', flex: 1 },
+    {
+      field: 'cartTotal',
+      headerName: 'Cart Total',
+      flex: 1,
+    },
+    {
+      field: 'discount',
+      headerName: 'Discount',
+      flex: 1,
+     
+    },
+    
+    {
+      field: 'SubTotal',
+      headerName: 'Sub Total',
+      cellClassName: 'name-column--cell',
+      flex: 1,
+    },
+
 
     {
-      field: 'name',
-      headerName: 'Product Name',
-      flex: 1,
-    },
-    {
-      field: 'items',
-      headerName: 'Maximum products',
-      flex: 1,
-    },
-    {
-      field: 'productId',
-      headerName: 'productId',
+      field: 'date',
+      headerName: 'Time Stamp',
       flex: 1,
     },
   ]
 
+  console.log(content)
   let rows = content?.map((content) => ({
     id: content.id,
-    name: content.productName,
-    items: content.items,
-    productId: content.productId,
+    cartTotal: content.total,
+    discount: content.discount,
+    SubTotal: content.subTotal,
+    date: new Date(content.createdAt).toString().slice(0, 25),
   }))
 
   const CustomToolbar = () => {
@@ -127,34 +102,13 @@ const Material = () => {
         <GridToolbarDensitySelector />
         <GridToolbarExport printOptions={{ disableToolbarButton: false }} />
 
-        {selectedRows.length === 1 && (
-          <Button
-            className='p-0 pe-2'
-            variant='text'
-            onClick={() => badgeCreate(selectedRows[0].id)}
-          >
-            <DesignServices fontSize='small' />
-            <span className='px-2'>Create a new Batch </span>
-          </Button>
-        )}
-
-        {selectedRows.length === 1 && (
-          <Button
-            className='p-0 pe-2'
-            variant='text'
-            onClick={() => removeBlueprint(selectedRows[0].id)}
-          >
-            <DeleteOutline fontSize='small' />
-            <span className='px-2'>Remove Blueprint</span>
-          </Button>
-        )}
       </GridToolbarContainer>
     )
   }
 
   return (
     <Box m='20px'>
-      <AdminHeader title='BLUEPRINTS' subtitle='Managing Blueprints' />
+      <AdminHeader title='SALES' subtitle='Sales View' />
 
       <Box
         m='40px 0 0 0'
@@ -208,4 +162,4 @@ const Material = () => {
   )
 }
 
-export default Material
+export default Sales

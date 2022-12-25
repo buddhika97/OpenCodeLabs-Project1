@@ -29,6 +29,11 @@ import CreateGrn from './scenes/createGrnForm'
 import BluePrint from './scenes/bluePrint'
 import BluePrintList from './scenes/bluePrintTable'
 
+import Cart from './scenes/cart'
+
+import Sales from './scenes/sales'
+import SalesItems from './scenes/saleItems'
+
 import Bar from "./scenes/bar";
 import Form from "./scenes/form";
 import Line from "./scenes/line";
@@ -37,6 +42,7 @@ import FAQ from "./scenes/faq";
 import Calendar from "./scenes/calendar";
 import Geography from './scenes/geomap'
 import CreateCustomerForm from './scenes/customerCreateForm'
+import BadgeMint from './scenes/bluePrintMint'
 
 function DashboardRoutes() {
   const [theme, colorMode] = useMode()
@@ -49,7 +55,6 @@ function DashboardRoutes() {
           <main className="content">
             <TopBar  />
             <Routes>
-            <Route path = '/login' element = {<LoginPage />} />
             <Route path='/' element={<Dashboard />} />
             <Route path='/team' element={<Team />} />
             <Route path='/userupdate/:id' element={<UserUpdateForm />} />
@@ -72,6 +77,13 @@ function DashboardRoutes() {
             <Route path ='/blueprint' element={<BluePrint/>} />
             <Route path ='/blueprint/:keyword' element={<BluePrint/>} />
             <Route path = '/blueprintlist' element={<BluePrintList/>} />
+            <Route path = '/mintbadge/:id/:qty' element={<BadgeMint/>} />
+
+
+            <Route path = '/cart' element={<Cart/>} />
+
+            <Route path='/sales' element={<Sales/>} />
+            <Route path='/salesItems' element={<SalesItems/>} />
 
 
             <Route path='/invoices' element={<Invoices />} />

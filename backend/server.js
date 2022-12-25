@@ -8,7 +8,8 @@ import ProductRoutes from './routes/productRoutes.js'
 import ProductBatchRoutes from './routes/productBatchRoutes.js'
 import RmRoutes from './routes/rmRoutes.js'
 import blueprintRoutes from './routes/bluePrintRoutes.js'
-
+import uploadRoutes from './routes/uploadRoutes.js'
+import salesRoutes from './routes/salesRoute.js'
 
 import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
@@ -36,6 +37,12 @@ if (process.env.NODE_ENV === 'development') {
 //parse req.body GET/POST
 app.use(express.json())
 
+//we dont access __dirname when working with ES modules, it only available for common js modules, so path.resolve is used to mimic the __driname
+const __dirname = path.resolve()
+
+//making the uploads file static so browser can access it
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
 //routes
 app.use('/api/users', userRoutes)
 app.use('/api/customer', customerRoutes)
@@ -43,7 +50,8 @@ app.use('/api/product', ProductRoutes)
 app.use('/api/probatch', ProductBatchRoutes)
 app.use('/api/material', RmRoutes)
 app.use('/api/blueprint', blueprintRoutes)
-
+app.use('/api/upload', uploadRoutes)
+app.use('/api/sales', salesRoutes)
 
 //error handling
 app.use(notFound)

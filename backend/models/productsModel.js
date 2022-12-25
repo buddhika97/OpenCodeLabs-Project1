@@ -28,6 +28,9 @@ const Product = db.define('products', {
     discountPrice: {
       type: DataTypes.FLOAT
     },
+    image: {
+      type: DataTypes.STRING
+    },
 
   });
 

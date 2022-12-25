@@ -27,7 +27,7 @@ export const createBluePrint = asyncHandler(async (req, res) => {
       id: bluePrintId,
       resources: JSON.stringify(req.body.resources),
       productId: product.id,
-      productName: product.name
+      productName: product.name,
     }
     const result = await BluePrint.create(blueprint)
     return res.status(201).json(result)
@@ -51,7 +51,7 @@ export const getAllBluePrints = asyncHandler(async (req, res) => {
 
     let BluPrintReturn = {
       id: batch[i].id,
-      productName:batch[i].productName,
+      productName: batch[i].productName,
       productId: batch[i].productId,
       resources: batch[i].resources,
       items: await findProductCountAndCost(batch[i].resources),
@@ -65,30 +65,32 @@ export const getAllBluePrints = asyncHandler(async (req, res) => {
 
 //product counter helper
 const findProductCountAndCost = async (materialList) => {
-   // Initialize an empty array to store the product counts
-   let productCountArr = []
+  // Initialize an empty array to store the product counts
+  let productCountArr = []
 
-   // Loop through the material list and get the available quantity and cost for each material
-   for (const property in materialList) {
-     // Get the available quantity of the material from the probatches table
-     const available = await db.query(
-       `SELECT SUM(qty) FROM probatches WHERE materialId = '${property}' AND qty > 0;`
-     )
-     // Get the total cost of the material from the probatches table
-     const total = await db.query(
-       `SELECT * FROM probatches WHERE materialId = '${property}' AND qty > 0 ORDER BY createdAt ASC`
-     )
- 
-     // Calculate the number of products that can be made with the available quantity of the material
-     const productCount = Math.floor(available[0][0]['SUM(qty)'] / materialList[property])
- 
-     // Add the product count to the array
-     productCountArr.push(productCount)
-   }
- 
-   // Sort the array of product counts in ascending order and return the first (smallest) value
-   return productCountArr.sort((a, b) => a - b)[0]
- }
+  // Loop through the material list and get the available quantity and cost for each material
+  for (const property in materialList) {
+    // Get the available quantity of the material from the probatches table
+    const available = await db.query(
+      `SELECT SUM(qty) FROM probatches WHERE materialId = '${property}' AND qty > 0;`
+    )
+    // Get the total cost of the material from the probatches table
+    const total = await db.query(
+      `SELECT * FROM probatches WHERE materialId = '${property}' AND qty > 0 ORDER BY createdAt ASC`
+    )
+
+    // Calculate the number of products that can be made with the available quantity of the material
+    const productCount = Math.floor(
+      available[0][0]['SUM(qty)'] / materialList[property]
+    )
+
+    // Add the product count to the array
+    productCountArr.push(productCount)
+  }
+
+  // Sort the array of product counts in ascending order and return the first (smallest) value
+  return productCountArr.sort((a, b) => a - b)[0]
+}
 
 // @desc  product details
 // @route GET /api/product/:id
@@ -96,7 +98,40 @@ const findProductCountAndCost = async (materialList) => {
 export const getSingleBluePrint = asyncHandler(async (req, res) => {
   const blueprint = await BluePrint.findByPk(req.params.id)
 
+  const resourecesArr = []
+  let returnArr = []
+  // blueprint.resources.forEach((item)=> console.log(item))
+
   if (blueprint) {
+    const materialList = JSON.parse(blueprint.resources)
+
+    for (const property in materialList) {
+      const material = await db.query(
+        `SELECT * from 	probatches WHERE materialId='${property}' AND qty >       0 ORDER BY createdAt ASC`
+      )
+
+      let availableQty = 0
+
+      if (materialList[property] > material[0][0].qty) {
+        for (let i = 0; i < material[0].length; i++) {
+          let cache = availableQty
+          availableQty += material[0][i].qty
+          if (availableQty > materialList[property]) {
+            material[0][i].qty = materialList[property] - cache
+            returnArr.push(material[0][i])
+            break
+          } else {
+            returnArr.push(material[0][i])
+          }
+        }
+      } else {
+        material[0][0].qty = materialList[property]
+        returnArr.push(material[0][0])
+      }
+    }
+
+    blueprint.resources = returnArr
+
     res.status(200).json(blueprint)
   } else {
     res.status(404)

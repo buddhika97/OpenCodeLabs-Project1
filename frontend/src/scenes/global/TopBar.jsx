@@ -5,40 +5,44 @@ import { ColorModeContext, tokens } from '../../theme'
 import InputBase from '@mui/material/InputBase'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
+import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import SearchIcon from '@mui/icons-material/Search'
 import Build from '@mui/icons-material/Build'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { getBluePrintList } from '../../actions/materialActions'
+import { getCartList } from '../../actions/cartAction'
 
 const TopBar = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const colorMode = useContext(ColorModeContext)
-
+  const navigate = useNavigate()
 
   const {
     isLoading,
     isError,
     error,
-    data: bluePrint,
-  } = useQuery(['bluePrint'], getBluePrintList)
+    data: cart,
+  } = useQuery(['cart'], getCartList)
 
   let content
   if (isLoading) {
-   
   } else if (isError) {
-    
   } else {
-    content = bluePrint
+    content = cart
   }
 
-  let bllueprintlength = 0
-  if(content){
-    bllueprintlength = content.length
+  let cartLength = 0
+  if (content) {
+    cartLength = content.length
+  }
+
+ 
+  const signOut = () => {
+    localStorage.removeItem('userInfo')
+    window.location.reload()
   }
 
   return (
@@ -64,18 +68,16 @@ const TopBar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <Link to='/admin/blueprint'>
+        
+
+        <Link to='/admin/cart'>
           <IconButton>
-            <Badge badgeContent={bllueprintlength} color='secondary'>
-              <Build />
+            <Badge badgeContent={cartLength} color='secondary'>
+              <AddShoppingCart />
             </Badge>
           </IconButton>
         </Link>
-
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
+        <IconButton onClick={signOut}>
           <PersonOutlinedIcon />
         </IconButton>
       </Box>
