@@ -26,24 +26,34 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route GET /api/products
 // @access Private
 const getAllProduct = asyncHandler(async (req, res) => {
+  // Retrieve all products that have batches
   let products = await ProBatch.findAll({ include: Product })
+  // Retrieve all products that do not have batches
   let outOfStock = await Product.findAll({ include: ProBatch })
+  // Filter outOfStock array to only include products with no batches
   outOfStock = outOfStock.filter((item) => item.ProBatches.length < 1)
+  // Set the quantity of outOfStock products to 0
   outOfStock.forEach((item) => (item.qty = 0))
 
+  // Retrieve all products and their total quantities from the database
   let amount =
     await db.query(`SELECT products.id, products.name, products.description,products.category, products.brand, products.re_order_level, 
   SUM(probatches.qty) as sum FROM products,probatches 
   WHERE products.id = probatches.productId
   GROUP BY probatches.productId`)
 
+  // Filter the amount array to only include products with no quantities
   let filterArr = amount[0]
   filterArr = filterArr.filter((item) => item.sum < 1)
+  // Add the outOfStock products to the amount array
   outOfStock = [...outOfStock, ...filterArr]
-  let inStock = products.filter((item) => item.qty > 0)
-  inStock = products.filter((item) => item.productId !== null)
+  // Filter the products array to only include products with quantities greater than 0
+  let inStock = products.filter((item) => Number(item.qty) > 0)
+  // Remove products from the inStock array that do not have a productId
+  inStock = inStock.filter((item) => item.productId !== null)
 
-  console.log(req.query)
+  // Return the inStock array if the "stock" query parameter is "in", otherwise return the outOfStock array
+  console.log(inStock[0])
   if (req.query.stock === 'in') {
     res.status(200).json(inStock)
   } else {
@@ -55,17 +65,11 @@ const getAllProduct = asyncHandler(async (req, res) => {
 // @route GET /api/products/names
 // @access Private
 const getProductNames = asyncHandler(async (req, res) => {
-
-
-
   // let products = await db.query(`SELECT * FROM products WHERE name LIKE '%${req.query.key}%'`)
 
   let products = await db.query(`SELECT name FROM products`)
 
-
-  
   res.status(200).json(products[0])
-
 })
 
 // @desc  product details

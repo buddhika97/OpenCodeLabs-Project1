@@ -11,6 +11,7 @@ import blueprintRoutes from './routes/bluePrintRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import salesRoutes from './routes/salesRoute.js'
 
+import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import db from './config/db.js'
 
