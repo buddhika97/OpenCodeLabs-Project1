@@ -53,6 +53,21 @@ app.use('/api/blueprint', blueprintRoutes)
 app.use('/api/upload', uploadRoutes)
 app.use('/api/sales', salesRoutes)
 
+
+ // after building react application giviing the access to react build version
+ if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+  // Set up a route to serve the index.html file for all other routes
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+} else {
+  // Set up a route to send a message when the root URL is accessed
+  app.get('/', (req, res) => {
+    res.send('api is running!')
+  })
+}
+
 //error handling
 app.use(notFound)
 app.use(errorHandler)
