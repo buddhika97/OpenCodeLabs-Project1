@@ -101,7 +101,7 @@ const Sidebar = () => {
                     ml='15px'
                   >
                     <Typography variant='h3' color={colors.grey[100]}>
-                      SHOP
+                    SANDELLA
                     </Typography>
                     <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                       <MenuOutlinedIcon />
@@ -188,7 +188,9 @@ const Sidebar = () => {
                   setSelected={setSelected}
                 />
 
-                <Typography
+                {userInfo.type !== 'user' && (
+                  <>
+                  <Typography
                   variant='h6'
                   color={colors.grey[300]}
                   sx={{ m: '15px 0 5px 20px' }}
@@ -282,8 +284,19 @@ const Sidebar = () => {
                   icon={<CalendarTodayOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
-                />
+                /></>
+                  
+                )}
+
+                
               </Box>
+              <Typography
+                  variant='h6'
+                  color={colors.grey[300]}
+                  sx={{ m: '15px 0 5px 20px' }}
+                >
+                &copy; Open Code Labs - 2022
+                </Typography>
             </Menu>
           </ProSidebar>
         </Box>

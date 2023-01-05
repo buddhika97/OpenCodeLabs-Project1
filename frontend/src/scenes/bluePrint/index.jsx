@@ -208,20 +208,20 @@ const Material = () => {
           id='combo-box-demo'
           options={newProducts}
           onChange={(event, value) => setKeyword(value)}
-          sx={{ background: '#293040' }}
+          sx={{ background: `${colors.primary[400]}` }}
           renderInput={(params) => <TextField {...params} label='Products' />}
         />
 
         <Box margin='20px 0 20px'>
           {bluePrintList?.map((item, index) => (
             <Grid container>
-              <Grid item xs={9} fontSize='25px'>
+              <Grid item xs={7} fontSize='25px'>
                 {item.name}
               </Grid>
-              <Grid item xs={1} fontSize='25px'>
+              <Grid item xs={2} fontSize='25px'>
                 {item.costPrice} * {item.bluePrintQty}
               </Grid>
-              <Grid item xs={2} fontSize='25px'>
+              <Grid item xs={3} fontSize='25px'>
                 = {(item.costPrice * item.bluePrintQty).toFixed(2)} LKR
               </Grid>
             </Grid>
@@ -230,11 +230,11 @@ const Material = () => {
         <hr />
         <Box margin='20px 0 20px'>
           <Grid container>
-            <Grid item xs={9} fontSize='25px'>
+            <Grid item xs={7} fontSize='25px'>
               TOTAL MATERIAL COST
             </Grid>
-            <Grid item xs={1} fontSize='25px'></Grid>
-            <Grid item xs={2} fontSize='25px'>
+            <Grid item xs={2} fontSize='25px'></Grid>
+            <Grid item xs={3} fontSize='25px'>
               ={' '}
               {bluePrintList
                 ?.reduce((acc, cv) => acc + cv.costPrice * cv.bluePrintQty, 0)
@@ -254,7 +254,7 @@ const Material = () => {
 
         <Box
           m='40px 0 0 0'
-          height='30vh'
+          height='60vh'
           sx={{
             '& .MuiDataGrid-root': {
               border: 'none',

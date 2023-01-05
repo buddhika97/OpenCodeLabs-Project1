@@ -8,13 +8,13 @@ import {
   updateUser,
   getSingleUser,
 } from '../controllers/userController.js'
-import { protect } from '../middleware/authMiddleware.js'
+import { protect,admin, } from '../middleware/authMiddleware.js'
 
-router.route('/').post(registerUser).get(protect, getUsers)
+router.route('/').post(registerUser).get(protect,admin, getUsers)
 
 router.post('/login', authUser)
 
-router.route('/:id').put(protect, updateUser).get(protect, getSingleUser)
+router.route('/:id').put(protect,admin, updateUser).get(protect,admin, getSingleUser)
 
 export default router
 

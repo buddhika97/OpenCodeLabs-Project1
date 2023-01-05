@@ -150,6 +150,23 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 })
 
+
+//@desc get names of all products and materils
+// @route GET /api/product/allnames
+// @access Private
+const getallProductsAndMaterial = asyncHandler(async (req, res) => {
+  const productnames = await Product.findAll({
+    attributes: ['name']
+  });
+  const matNames = await Material.findAll({
+    attributes: ['name']
+  });
+
+  const resArr = [...productnames,...matNames]
+
+  res.status(200).json(resArr)
+})
+
 export {
   getAllProduct,
   createProduct,
@@ -158,4 +175,5 @@ export {
   prodcutDetails,
   updateProduct,
   getProductNames,
+  getallProductsAndMaterial
 }

@@ -96,7 +96,7 @@ const SalesItems = () => {
     productId: content.productId,
     productName: content.productName,
     quantity: content.quantity,
-    costPrice: content.costPrice,
+    costPrice: (userInfo.type !== 'user') ? content.costPrice : 'X',
     price: content.price,
     date: new Date(content.createdAt).toString().slice(0, 25),
   }))

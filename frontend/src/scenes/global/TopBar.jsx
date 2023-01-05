@@ -8,7 +8,7 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import SearchIcon from '@mui/icons-material/Search'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { getCartList } from '../../actions/cartAction'
 
@@ -16,7 +16,7 @@ const TopBar = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const colorMode = useContext(ColorModeContext)
-
+const navigate = useNavigate()
   const {
     isLoading,
     isError,
@@ -38,7 +38,8 @@ const TopBar = () => {
  
   const signOut = () => {
     localStorage.removeItem('userInfo')
-    window.location.reload()
+    window.location.href = '/'
+    
   }
 
   return (

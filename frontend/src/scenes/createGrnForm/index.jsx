@@ -1,19 +1,24 @@
-import { Box, Button, TextField } from '@mui/material'
+import { Autocomplete, Box, Button, TextField, useTheme } from '@mui/material'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import AdminHeader from '../../components/AdminHeader'
-import {  useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import { useNavigate } from 'react-router-dom'
 
-import {  useMutation } from 'react-query'
-import { createGrn } from '../../actions/grnActions'
+import { useMutation, useQuery } from 'react-query'
+import { createGrn, listproductMAatNames } from '../../actions/grnActions'
+import { tokens } from '../../theme'
+import { useState } from 'react'
 
 const CreateGrnForm = () => {
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
   const isNonMobile = useMediaQuery('(min-width:600px)')
+  const [keyword, setKeyword] = useState('')
   const navigate = useNavigate()
 
   const users = useSelector((state) => state.userLogin)
@@ -31,9 +36,31 @@ const CreateGrnForm = () => {
     },
   })
 
-  const handleFormSubmit = (values) => {
-    addProductMutation.mutate({ ...values, token: userInfo.token })
+  const {
+    isLoading,
+    isError,
+    error,
+    data: names,
+  } = useQuery(['names', userInfo.token], listproductMAatNames)
+
+  let content
+  if (isLoading) {
+    return <p>Loading</p>
+  } else if (isError) {
+    return <p>{error.message}</p>
+  } else {
+    content = names
   }
+
+  const handleFormSubmit = (values) => {
+    console.log(values)
+    addProductMutation.mutate({ ...values,name:keyword, token: userInfo.token })
+  }
+
+
+  const namesArr= []
+  content?.forEach(item => namesArr.push(item.name))
+  console.log(namesArr)
 
   return (
     <Box m='20px'>
@@ -103,19 +130,19 @@ const CreateGrnForm = () => {
                 sx={{ gridColumn: 'span 4' }}
               />
 
-              <TextField
+               <Autocomplete
                 fullWidth
                 variant='filled'
-                type='text'
-                label='Product / Material Name'
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.name}
-                name='name'
-                error={!!touched.name && !!errors.name}
-                helperText={touched.name && errors.name}
-                sx={{ gridColumn: 'span 4' }}
-              />
+                disablePortal
+                id='combo-box-demo'
+                options={namesArr}
+                onChange={(event, value) => setKeyword(value)}
+                sx={{ background: `${colors.primary[400]}`,gridColumn: 'span 4'  }}
+                renderInput={(params) => (
+                  <TextField {...params} label='Product/Material Name' />
+                )}
+             
+              /> 
             </Box>
             <Box display='flex' justifyContent='end' mt='20px'>
               <Button type='submit' color='secondary' variant='contained'>
@@ -129,9 +156,8 @@ const CreateGrnForm = () => {
   )
 }
 
-
 const checkoutSchema = yup.object().shape({
-  name: yup.string().required('required'),
+ 
   salesPrice: yup.number().required('required'),
   costPrice: yup.number().required('required'),
   qty: yup.number().required('required'),
@@ -139,8 +165,8 @@ const checkoutSchema = yup.object().shape({
 const initialValues = {
   qty: '',
   salesPrice: '',
-  costPrice:'',
-  name: '',
+  costPrice: '',
+  
 }
 
 export default CreateGrnForm

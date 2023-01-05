@@ -9,7 +9,7 @@ import {
   totalCustomers
 } from '../controllers/customerController.js'
 
-import { protect } from '../middleware/authMiddleware.js'
+import { protect,admin } from '../middleware/authMiddleware.js'
 
 router.route('/').get(protect, getAllUsers).post(protect, createCustomer)
 

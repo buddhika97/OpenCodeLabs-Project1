@@ -42,3 +42,18 @@ export const listSalesItems = async (token) => {
 }
 
 
+export const getInvoiceData = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token.queryKey[1]}`,
+    },
+  }
+
+  const { data } = await axios.get(`/api/sales/invoice/${token.queryKey[1]}`)
+
+  return data
+}
+
+
+
+

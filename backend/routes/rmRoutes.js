@@ -8,14 +8,14 @@ import {
   updateMaterial,
 } from '../controllers/rmController.js'
 
-import { protect } from '../middleware/authMiddleware.js'
+import { protect,admin } from '../middleware/authMiddleware.js'
 
-router.route('/').get(protect, getAllMaterials).post(protect, createMaterial)
+router.route('/').get(protect,admin, getAllMaterials).post(protect,admin, createMaterial)
 
 router
   .route('/:id')
-  .get(protect, getSingleMaterial)
-  .delete(protect, removeMaterial)
-  .put(protect, updateMaterial)
+  .get(protect,admin, getSingleMaterial)
+  .delete(protect,admin, removeMaterial)
+  .put(protect,admin, updateMaterial)
 
 export default router

@@ -10,16 +10,16 @@ import {
   totalCost
 } from '../controllers/productBatchesController.js'
 
-import { protect } from '../middleware/authMiddleware.js'
+import { protect,admin } from '../middleware/authMiddleware.js'
 
 router
   .route('/')
-  .get(protect, getAllBatches)
-  .post(protect, createBatch)
-  .put(protect, updateMaterialsBatches)
+  .get(protect,admin, getAllBatches)
+  .post(protect,admin, createBatch)
+  .put(protect,admin, updateMaterialsBatches)
 
-router.get('/total', protect, totalCost)
+router.get('/total',protect,admin, totalCost)
 
-router.route('/:id').get(getSingleBatch)
+router.route('/:id').get(protect,admin, getSingleBatch)
 
 export default router

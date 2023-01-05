@@ -182,3 +182,17 @@ export const updateCustomer = (formdata, id) => async (dispatch, getState) => {
     )
   }
 }
+
+
+//list customers
+export const listAllCustomers = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token.queryKey[1]}`,
+    },
+  }
+
+  const { data } = await axios.get(`/api/customer`, config)
+
+  return data
+}

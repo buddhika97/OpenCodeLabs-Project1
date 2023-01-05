@@ -7,21 +7,25 @@ import {
     removeProduct,
     updateProduct,
     prodcutDetails,
-    getProductNames
+    getProductNames,
+    getallProductsAndMaterial
 } from '../controllers/productController.js'
 
-import { protect } from '../middleware/authMiddleware.js'
+import { protect,admin, } from '../middleware/authMiddleware.js'
 
-router.route('/').get(protect, getAllProduct).post(protect, createProduct)
+router.route('/').get(protect, getAllProduct).post(protect,admin, createProduct)
 
-router.get('/names', protect, getProductNames)
+router.get('/names', protect,admin, getProductNames)
+router.get('/allnames', protect,admin, getallProductsAndMaterial)
 
 router.route('/public/:id').get(prodcutDetails)
 
+
+
 router
   .route('/:id')
-  .get( protect, getSingleProduct)
-  .delete(protect, removeProduct)
-  .put(protect, updateProduct)
+  .get(protect,admin, getSingleProduct)
+  .delete(protect,admin, removeProduct)
+  .put(protect,admin, updateProduct)
 
 export default router

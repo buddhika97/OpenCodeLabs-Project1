@@ -8,14 +8,14 @@ import {
     updateBlueprint,
 } from '../controllers/bluePrintController.js'
 
-import { protect } from '../middleware/authMiddleware.js'
+import { protect,admin } from '../middleware/authMiddleware.js'
 
-router.route('/').get(protect, getAllBluePrints).post(protect, createBluePrint)
+router.route('/').get(protect, admin,getAllBluePrints).post(protect,admin, createBluePrint)
 
 router
   .route('/:id')
-  .get( getSingleBluePrint)
-  .delete(protect, removeBlueprint)
-  .put(protect, updateBlueprint)
+  .get( protect, admin, getSingleBluePrint)
+  .delete(protect, admin,removeBlueprint)
+  .put(protect,admin, updateBlueprint)
 
 export default router

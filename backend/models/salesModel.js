@@ -8,7 +8,21 @@ const Sales = db.define('sales', {
   },
   customer: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id'
+    }
+  },
+  
   total:{
     type: DataTypes.FLOAT,
     allowNull: false,

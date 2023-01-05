@@ -74,6 +74,11 @@ const Sales = () => {
       headerName: 'Time Stamp',
       flex: 1,
     },
+    {
+      field: 'customer',
+      headerName: 'Customer Email',
+      flex: 1,
+    },
   ]
 
   console.log(content)
@@ -83,6 +88,7 @@ const Sales = () => {
     discount: content.discount,
     SubTotal: content.subTotal,
     date: new Date(content.createdAt).toString().slice(0, 25),
+    customer: content.customer
   }))
 
   const CustomToolbar = () => {

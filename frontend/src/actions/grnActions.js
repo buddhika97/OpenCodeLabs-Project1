@@ -41,3 +41,16 @@ export const updateProBatches = async (batch) => {
 
   return await axios.put(`/api/probatch`, batch, config)
 }
+
+
+export const listproductMAatNames = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token.queryKey[1]}`,
+    },
+  }
+
+  const { data } = await axios.get(`/api/product/allnames`, config)
+
+  return data
+}

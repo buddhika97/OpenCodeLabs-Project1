@@ -5,11 +5,14 @@ import Product from '../models/productsModel.js'
 import db from '../config/db.js'
 import Sales from '../models/salesModel.js'
 import SaleItems from '../models/salesItemModel.js'
+import Customer from '../models/customerModel.js'
+import sendEmail from '../Utils/email.js'
 
 // @desc create a Sale
 // @route POST / api/sales
 // @access Private
 const createSale = asyncHandler(async (req, res) => {
+
   if (req.body.SalesItems) {
     for (let i = 0; i < req.body.SalesItems.length; i++) {
       const batch = await ProBatch.findByPk(req.body.SalesItems[i].id)
@@ -20,11 +23,19 @@ const createSale = asyncHandler(async (req, res) => {
     }
   }
 
+  if(!req.body.customer){
+    res.status(400)
+    throw new Error('Please add Customer Email')
+  }
+
   const sale = {
     id: uuidv4(),
     customer: req.body.customer,
+    userName:req.user.name,
+    userId: req.user.id,
     total: req.body.cartTotal,
     discount: req.body.discount,
+    customer: req.body.customer,
     subTotal: Number(req.body.cartTotal) - Number(req.body.discount),
   }
 
@@ -53,6 +64,8 @@ const createSale = asyncHandler(async (req, res) => {
         await SaleItems.create(salesItem)
       }
     }
+    
+    sendEmail(req.body.customer, saleResult.id)
     res.status(201).json('Success!')
   } else {
     res.status(500)
@@ -64,8 +77,29 @@ const createSale = asyncHandler(async (req, res) => {
 // @route GET /api/sales
 // @access Private
 const listSales = asyncHandler(async (req, res) => {
+  // 
   const sales = await Sales.findAll()
   res.status(200).json(sales)
+})
+
+// @desc  get Invoice
+// @route GET /api/sales/invoice
+// @access Private
+const invoiceData = asyncHandler(async (req, res) => {
+ 
+  const sale = await Sales.findByPk(req.params.id)
+  const salesItems = await SaleItems.findAll({
+    where: {
+      saleId: sale.id,
+    }
+  })
+ const customer = await  Customer.findOne({
+  where: {
+    email: sale.customer
+  }
+ })
+
+  res.status(200).json({sale, salesItems,customer})
 })
 
 
@@ -100,4 +134,4 @@ const totalSales = asyncHandler(async (req, res) => {
 })
 
 
-export { createSale, listSales, listSalesbyItem,latestSales,totalSales }
+export { createSale, listSales, listSalesbyItem,latestSales,totalSales,invoiceData }

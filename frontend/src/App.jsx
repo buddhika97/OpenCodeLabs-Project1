@@ -4,6 +4,7 @@ import LoginPage from './pages/Login'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ProductScreen from './pages/productScreen'
+import Invoice from './pages/invoice'
 
 import DashboardRoutes from './DashboardRoutes'
 
@@ -13,7 +14,8 @@ function App() {
       <Routes>
         <Route path='/admin/*' element={<DashboardRoutes />} />
         <Route path='/' element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage/>} />
+        <Route path='/invoice/:id' element={<Invoice />} />
+        {/* <Route path="/signup" element={<SignupPage/>} /> */}
         <Route path='/product/:id' element={<ProductScreen/>} />
       </Routes>
       <ToastContainer />
