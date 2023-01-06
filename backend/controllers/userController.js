@@ -11,7 +11,7 @@ import User from '../models/userModel.js'
 const authUser = asyncHandler(async (req, res) => {
   console.log(req.body)
   let { email, password } = req.body
-
+  
   const user = await User.findOne({ where: { email: email } })
 
   const bcryptPW = user.password

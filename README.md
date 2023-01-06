@@ -13,6 +13,7 @@
   - PASSWORD = Mysql db password
   - DATABASE = mysql db name
   - JWT_SECRET = Json web token secret
+  - DB_STRING = mysql db string(when you use a db string)
 ---
 
 
