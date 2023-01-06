@@ -159,7 +159,7 @@ const updateBatch = asyncHandler(async (req, res) => {
 // @access Private
 const totalCost = asyncHandler(async (req, res) => {
   const sales = await db.query(`SELECT SUM(costPrice) as totalCost
-  FROM probatches`)
+  FROM ProBatches`)
   console.log('dfd')
   res.status(200).json(sales[0][0])
 })

@@ -30,9 +30,9 @@ const getAllMaterials = asyncHandler(async (req, res) => {
   outOfStock.forEach(item => item.qty = 0)
 
   let amount = await db.query(`SELECT materials.id, materials.name, materials.description,materials.category, materials.brand, materials.re_order_level, 
-  SUM(probatches.qty) as sum FROM materials,probatches 
-  WHERE materials.id = probatches.materialId 
-  GROUP BY probatches.materialId`)
+  SUM(ProBatches.qty) as sum FROM materials,ProBatches 
+  WHERE materials.id = ProBatches.materialId 
+  GROUP BY ProBatches.materialId`)
 
   let filterArr = amount[0]
   filterArr = filterArr.filter(item => item.sum < 1) 

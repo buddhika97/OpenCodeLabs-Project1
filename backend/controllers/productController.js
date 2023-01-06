@@ -38,9 +38,9 @@ const getAllProduct = asyncHandler(async (req, res) => {
   // Retrieve all products and their total quantities from the database
   let amount =
     await db.query(`SELECT products.id, products.name, products.description,products.category, products.brand, products.re_order_level, 
-  SUM(probatches.qty) as sum FROM products,probatches 
-  WHERE products.id = probatches.productId
-  GROUP BY probatches.productId`)
+  SUM(ProBatches.qty) as sum FROM products,ProBatches 
+  WHERE products.id = ProBatches.productId
+  GROUP BY ProBatches.productId`)
 
   // Filter the amount array to only include products with no quantities
   let filterArr = amount[0]

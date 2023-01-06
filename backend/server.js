@@ -72,6 +72,7 @@ app.use('/api/sales', salesRoutes)
 app.use(notFound)
 app.use(errorHandler)
 
+
 const PORT = process.env.PORT || 5000
 
 app.listen(

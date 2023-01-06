@@ -72,11 +72,11 @@ const findProductCountAndCost = async (materialList) => {
   for (const property in materialList) {
     // Get the available quantity of the material from the probatches table
     const available = await db.query(
-      `SELECT SUM(qty) FROM probatches WHERE materialId = '${property}' AND qty > 0;`
+      `SELECT SUM(qty) FROM ProBatches WHERE materialId = '${property}' AND qty > 0;`
     )
     // Get the total cost of the material from the probatches table
     const total = await db.query(
-      `SELECT * FROM probatches WHERE materialId = '${property}' AND qty > 0 ORDER BY createdAt ASC`
+      `SELECT * FROM ProBatches WHERE materialId = '${property}' AND qty > 0 ORDER BY createdAt ASC`
     )
 
     // Calculate the number of products that can be made with the available quantity of the material
@@ -107,7 +107,7 @@ export const getSingleBluePrint = asyncHandler(async (req, res) => {
 
     for (const property in materialList) {
       const material = await db.query(
-        `SELECT * from 	probatches WHERE materialId='${property}' AND qty >       0 ORDER BY createdAt ASC`
+        `SELECT * from 	ProBatches WHERE materialId='${property}' AND qty >       0 ORDER BY createdAt ASC`
       )
 
       let availableQty = 0
